@@ -160,7 +160,7 @@ def make_request(url, num_requests, params=None):
             r = requests.get(url = url)
         try: 
             match_json = r.json()
-        except Exception err:
+        except Exception as err:
             print ("Exception occured when parsing response: {}".format(err))
             continue
         if not(isinstance(match_json, dict) and match_json.get("error", "") == "rate limit exceeded"):
@@ -177,8 +177,8 @@ def main():
 
     pro_matches_URL = "https://api.opendota.com/api/proMatches"
     match_URL = "https://api.opendota.com/api/matches/{}"
-    num_requests = 5004
-    last_mid = 4316944059
+    num_requests = 5103
+    last_mid = 3021672051
     i = 2
     while num_requests < 45000:
         if last_mid != -1:
