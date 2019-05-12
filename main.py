@@ -9,7 +9,7 @@ with open("item_data.json", 'r') as f:
     item_costs = json.loads(f.readline())["itemdata"]
 
 def get_item_cost(key):
-    return item_costs[key]["cost"]
+    return item_costs.get(key, {"cost": 0})["cost"]
 
 class Player:
     def __init__(self, player_name):
@@ -155,10 +155,14 @@ def make_request(url, num_requests, params=None):
         i += 1
         num_requests += 1
         if params:
-            r = requests.get(url = url, params=params)
+                r = requests.get(url = url, params=params)
         else:
             r = requests.get(url = url)
-        match_json = r.json()
+        try: 
+            match_json = r.json()
+        except Exception err:
+            print ("Exception occured when parsing response: {}".format(err))
+            continue
         if not(isinstance(match_json, dict) and match_json.get("error", "") == "rate limit exceeded"):
             return match_json, num_requests
         time.sleep(5)
@@ -173,8 +177,8 @@ def main():
 
     pro_matches_URL = "https://api.opendota.com/api/proMatches"
     match_URL = "https://api.opendota.com/api/matches/{}"
-    num_requests = 5103
-    last_mid = 3024916606
+    num_requests = 5004
+    last_mid = 4316944059
     i = 2
     while num_requests < 45000:
         if last_mid != -1:
