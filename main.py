@@ -173,9 +173,9 @@ def main():
 
     pro_matches_URL = "https://api.opendota.com/api/proMatches"
     match_URL = "https://api.opendota.com/api/matches/{}"
-    num_requests = 0
-    last_mid = -1
-    i = 1
+    num_requests = 5103
+    last_mid = 3024916606
+    i = 2
     while num_requests < 45000:
         if last_mid != -1:
             matches_file, num_requests = make_request(pro_matches_URL, num_requests, params={"less_than_match_id":last_mid})
